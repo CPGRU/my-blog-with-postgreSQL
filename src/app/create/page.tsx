@@ -1,8 +1,11 @@
 "use client";
 
+import "react-quill/dist/quill.snow.css";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css";
+import { PlusIcon } from "@heroicons/react/16/solid";
+import axios from "axios";
+import { Button } from "../ui/button";
 
 const QuillEditor = dynamic(
   ()=>import('react-quill'),
@@ -48,12 +51,37 @@ const formats = [
   'video',
 ];
 
+export type PostContent = {
+    content: string,
+}
+
 export default function Home() {
   const [ content, setContent ] = useState('');
+  
+  const handleClick = async(content: string) =>{
+    try{
+        const data = {
+            content: content
+        } as PostContent;
+
+        await axios.post('/api/sendpost', data)
+        .then(res=>{
+            console.log(res)
+        })
+    }catch(err){
+        console.log(err)
+    }
+    
+  }
 
   return (
     <div>
-      <QuillEditor theme="snow" modules={modules} formats={formats} value={content} onChange={setContent}/>
+        <QuillEditor theme="snow" modules={modules} formats={formats} value={content} onChange={setContent}/>
+        <Button onClick={(event)=>handleClick(content)} className="mt-5">
+            
+            Send
+        </Button>
+        <p>{content}</p>
     </div>
     
   )
