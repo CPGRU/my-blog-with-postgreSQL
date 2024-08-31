@@ -1,9 +1,9 @@
 "use client";
 
 import "react-quill/dist/quill.snow.css";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import dynamic from "next/dynamic";
-import { PlusIcon } from "@heroicons/react/16/solid";
+import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 import { Button } from "../ui/button";
 
@@ -52,37 +52,42 @@ const formats = [
 ];
 
 export type PostContent = {
-    content: string,
+    title: string,
+    post_content: string,
 }
 
-export default function Home() {
-  const [ content, setContent ] = useState('');
+export default function Page() {
+    const [ title, setTitle ] = useState('');
+    const [ content, setContent ] = useState('');
   
-  const handleClick = async(content: string) =>{
-    try{
-        const data = {
-            content: content
+    const handleSubmit = async(event:FormEvent) =>{
+        event.preventDefault();
+
+        const data = {      
+            title,
+            post_content: content,
         } as PostContent;
 
         await axios.post('/api/sendpost', data)
         .then(res=>{
             console.log(res)
         })
-    }catch(err){
-        console.log(err)
+        .catch(err=>console.log(err))
     }
-    
-  }
 
-  return (
-    <div>
-        <QuillEditor theme="snow" modules={modules} formats={formats} value={content} onChange={setContent}/>
-        <Button onClick={(event)=>handleClick(content)} className="mt-5">
+    return (
+        <div>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="title">Title</label>
+                <input id="title" value={title} onChange={(event)=>setTitle(event.target.value)}/>
+                <QuillEditor theme="snow" modules={modules} formats={formats} value={content} onChange={setContent}/>
+                <Button  className="mt-5">
+                    <PlusCircleIcon className="w-5"/>
+                    <span className="ml-2" >Send</span>
+                </Button>
+            </form>
             
-            Send
-        </Button>
-        <p>{content}</p>
-    </div>
-    
-  )
+            <p>{content}</p>
+        </div> 
+    )
 }
