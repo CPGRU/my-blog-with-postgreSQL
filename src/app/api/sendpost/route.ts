@@ -4,14 +4,6 @@ import pool from '../../lib/db';
 import { formData, zfd } from 'zod-form-data';
 import { z } from 'zod'
 
-
-const schema = zfd.formData({
-            title: zfd.text(z.string()),
-            post_content: zfd.text(z.string())
-        });
-
-
-
 export async function POST (
     req: Request ,
     res: Response
