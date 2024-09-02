@@ -1,11 +1,15 @@
 "use client";
 
 import "react-quill/dist/quill.snow.css";
+import 'react-datepicker/dist/react-datepicker.min.css';
 import { FormEvent, useState } from "react";
 import dynamic from "next/dynamic";
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
+import DatePicker from "react-datepicker";
 import { Button } from "../ui/button";
+
+
 
 const QuillEditor = dynamic(
   ()=>import('react-quill'),
@@ -51,23 +55,29 @@ const formats = [
   'video',
 ];
 
-export type PostContent = {
+export type PostData = {
+    post_date: string,
     title: string,
     post_content: string,
 }
 
 export default function Form() {
+    //const date = new Date().toISOString().split('T')[0];
+    
     const [ title, setTitle ] = useState('');
     const [ content, setContent ] = useState('');
-  
+    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+    const date = selectedDate?.toISOString().split('T')[0];
+    
     const handleSubmit = async(event:FormEvent) =>{
         event.preventDefault();
 
         if( title && content){
-            const data = {      
+            const data = {
+                post_date: date,
                 title,
                 post_content: content,
-            } as PostContent;
+            } as PostData;
 
             await axios.post('/api/sendpost', data)
                 .then(res=>{console.log(res)})
@@ -85,9 +95,11 @@ export default function Form() {
                     <PlusCircleIcon className="w-5"/>
                     <span className="ml-2" >Send</span>
                 </Button>
+
+                <DatePicker selected={selectedDate} onChange={(date)=>setSelectedDate(date)}/>
             </form>
             
-            <p>{content}</p>
+            
         </div> 
     )
 }
