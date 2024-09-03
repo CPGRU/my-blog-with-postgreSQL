@@ -2,39 +2,38 @@
 
 import "react-quill/dist/quill.snow.css";
 import 'react-datepicker/dist/react-datepicker.min.css';
-import { ChangeEvent, FormEvent, useState } from "react";
-import Image from "next/image";
+import { FormEvent, useState } from "react";
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import { PostData } from "../lib/definitions";
 import { QuillEditor, modules, formats } from "./text-editor";
-import { Button } from "../ui/button";
-
-export type ImageFile = {
-    name: string
-}
+import { Button } from "./button";
+import UploadImage from "./upload-image";
 
 
 export default function Form() {
-    //const date = new Date().toISOString().split('T')[0];
     
     const [ title, setTitle ] = useState('');
     const [ content, setContent ] = useState('');
     const [ selectedImage, setSelectedImage ] = useState<File | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
     const date = selectedDate?.toISOString().split('T')[0];
+
+    //const [ postImage, setPostImage ] = useState('')
+    const [ imageName, setImageName ] = useState('')
     
-    console.log(selectedImage)
+    console.log(imageName)
     
     const handleSubmit = async(event:FormEvent) =>{
         event.preventDefault();
 
-        if( title && content){
+        if( title && content ){
             const data = {
                 post_date: date,
                 title,
                 post_content: content,
+                post_image: imageName,
             } as PostData;
 
             await axios.post('/api/sendpost', data)
@@ -51,10 +50,24 @@ export default function Form() {
         }
     }
 
+    
+
     return (
         <div>
+            
+            <br/>
+            <div>
+                <h3>Upload and display Image</h3>
+                { selectedImage && (
+                    <img src={URL.createObjectURL(selectedImage)} alt="post image"/>
+                )}
+                <input type="file" accept="image/*" onChange={handleImageChange}/>
+            </div>
+
             <form onSubmit={handleSubmit}>
                 <div className="mt-10">
+                    <UploadImage onImageClick={(filename)=>setImageName(filename)}/>
+
                     <label htmlFor="date">publish date</label>
                     <DatePicker 
                         id="date" 
@@ -74,13 +87,7 @@ export default function Form() {
                 </div>
                 
                 <QuillEditor theme="snow" modules={modules} formats={formats} value={content} onChange={setContent} placeholder="your content"/>
-                <div>
-                    <h3>Upload and display Image</h3>
-                    { selectedImage && (
-                        <img src={URL.createObjectURL(selectedImage)} alt="post image"/>
-                    )}
-                    <input type="file" accept="image/*" onChange={handleImageChange}/>
-                </div>
+                
                 
                 
                 <Button  className="mt-5">
