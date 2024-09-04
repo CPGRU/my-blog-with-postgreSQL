@@ -15,15 +15,16 @@ export async function POST (
         const post_content = jsonData.post_content;
         const post_date = jsonData.post_date;
         const post_image = jsonData.post_image;
+        const post_theme = jsonData.post_theme
 
         const query = `
-            INSERT INTO posts(title, post_content, post_date, post_image) 
-            VALUES($1, $2, $3, $4)
+            INSERT INTO posts(title, post_content, post_date, post_image, post_theme) 
+            VALUES($1, $2, $3, $4, $5)
         `;
 
         const result = await pool.query(
             query,
-            [title, post_content, post_date, post_image]
+            [title, post_content, post_date, post_image, post_theme]
         );
         console.log( "ttt",result );  
     } catch ( error ) {

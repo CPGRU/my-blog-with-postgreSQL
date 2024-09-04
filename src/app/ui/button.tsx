@@ -16,7 +16,7 @@ export function Button({
         <button
             {...rest}
             className={clsx(
-                'bg-blue-500 border rounded-full flex flex-row items-center justify-center py-3 px-6 text-center text-base text-white font-medium hover:bg-blue-800 disabled:bg-gray-3 disabled:border-gray-3 disabled:text-dark-5',
+                'bg-gradient-to-r from-slate-700 to-sky-700 border rounded-xl flex flex-row items-center justify-center py-3 px-6 text-center text-base text-white font-medium hover:from-slate-950 hover:to-sky-950 ',
                 className
             )}
         >

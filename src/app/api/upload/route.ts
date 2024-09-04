@@ -22,17 +22,13 @@ export async function POST (
             {error: 'No file received.'},
             {status: 400}
         );
-    }
+    };
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
     const filename = md5(buffer)
-    
-    /*
-    const filename = file.name.replace(" ", "_");
-    console.log(`testtest${filename}`)
-    */
+
     try {
         // Write the file to the specified directory (public/assets) with the modified filename
         await writeFile(

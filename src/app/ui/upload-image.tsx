@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Button } from "./button";
-import Image from "next/image";
+import { ArrowDownTrayIcon } from "@heroicons/react/16/solid";
 
 
 interface ImageNameProps {
@@ -14,16 +14,9 @@ export default function UploadImage ({ onImageClick }: ImageNameProps){
         raw: '',
         name: ''
     });
-
-    
-
-    const submit = async () => {
-        
-
+    const handleSubmit = async () => {
         let formData = new FormData();
         formData.append('file', image.raw);
-            
-
         const result = await axios.post(`/api/upload`, formData , {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -33,11 +26,8 @@ export default function UploadImage ({ onImageClick }: ImageNameProps){
             onImageClick(response.data.file);
             return response.data
         })
-        .catch(error=> console.log(error))
-        
-    }
-
-
+        .catch(error=> console.log(error)) 
+    };
     const handlePhotoChange = (e: any) => {
         if (e.target.files.length) {
             setImage({
@@ -47,19 +37,22 @@ export default function UploadImage ({ onImageClick }: ImageNameProps){
             });
         }
     };
-
-
     return (
-        <div>
+        <div className="bg-gray-200">
             <label htmlFor="upload-button">
                 {image.preview && (
-                    <img
-                        src={image.preview}
-                        alt="dummy"
-                        width="300"
-                        height="300"
-                        className="my-10 mx-5"
-                    />
+                    <>
+                        <img
+                            src={image.preview}
+                            width="300"
+                            height="300"
+                            className="my-10 mx-5 "
+                        />
+                        <Button onClick={handleSubmit}>
+                            <ArrowDownTrayIcon className="w-5"/>
+                            <span className="ml-2">Save</span>
+                        </Button>
+                    </>
                 ) }
             </label>
             <input
@@ -69,14 +62,8 @@ export default function UploadImage ({ onImageClick }: ImageNameProps){
                 accept="image/*"
                 onChange={handlePhotoChange}
             />
-            <Button onClick={submit}>
-                Save
-            </Button>
-            
             
         </div>
-        
-        
     )
 
 }

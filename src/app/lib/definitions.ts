@@ -3,3 +3,8 @@ export type PostData = {
     title: string,
     post_content: string,
 }
+
+export type Option = {
+    label: string;
+    value: string
+}
