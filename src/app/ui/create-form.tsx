@@ -30,7 +30,7 @@ export default function Form() {
     
     const handleSubmit = async(event:FormEvent) =>{
         event.preventDefault();
-        if( title && content ){
+        if( title && content && imageName && selectedTheme ){
             const data = {
                 post_date: date,
                 title,
@@ -42,19 +42,26 @@ export default function Form() {
             await axios.post('/api/sendpost', data)
                 .then(res=>{console.log(res)})
                 .catch(err=>console.log(err))
+            
+            setSelectedTheme(null);
+            setSelectedDate(new Date());
+            setTitle('');
+            setContent('');
+            setImageName('')
         }
+        
     };
   
     return (
         <div>
             <form onSubmit={handleSubmit}  className="flex flex-col">
                 <div >
-                    <div className="flex flex-col">
-                        <label htmlFor="title" className="mr-3">Title*</label>
-                        <input id="title" value={title} onChange={(event)=>setTitle(event.target.value)} placeholder="your title"required/>
+                    <div className="flex flex-row">
+                        <Dropdown options={options} value={selectedTheme} onChange={(option)=> setSelectedTheme(option)}/>
+                        <input className="border ml-5" id="title" value={title} onChange={(event)=>setTitle(event.target.value)} placeholder="title..."required/>
                     </div>
                 </div>
-                <div className="grid grid-cols-2 gap-6">
+                <div className="flex flex-col">
                     <div className="mt-5">
                         <label htmlFor="date">publish date</label>
                         <DatePicker 
@@ -69,24 +76,26 @@ export default function Form() {
                             }
                         />
                     </div>
-                    <Dropdown options={options} value={selectedTheme} onChange={(option)=> setSelectedTheme(option)}/>
+                    
                 
                     <QuillEditor className="bg-gray-300" theme="snow" modules={modules} formats={formats} value={content} onChange={setContent} placeholder="your content" />
                     <UploadImage onImageClick={(filename)=>setImageName(filename)} />
+
+                        
                 </div>
               
-                
-
-                
-
-                
-                
-                
-                
-                <Button  className="-mt-30">
+                <Button  className="mt-30">
                     <PlusCircleIcon className="w-5"/>
                     <span className="ml-2" >Send</span>
-                </Button>                
+                </Button>
+
+                
+
+                
+                
+                
+                
+                                
             </form>            
         </div> 
     )

@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import { Option } from "../lib/definitions";
 import Panel from "./panel";
 
@@ -16,11 +15,11 @@ export default function Dropdown ({options, value, onChange}: DropdownProps){
     const divElem = useRef<HTMLDivElement>(null);
 
     useEffect(()=>{
-        const handler = (event: MouseEvent) =>{
+        const handler = (event: MouseEvent ) =>{
             if(!divElem.current){
                 return;
             }
-            if(!divElem.current.contains(event.target)){
+            if(!divElem.current.contains(event.target as Node)){
                 setIsOpen(false)
             };
 
@@ -39,7 +38,7 @@ export default function Dropdown ({options, value, onChange}: DropdownProps){
 
     const renderedOptions = options.map((option)=>{
         return (
-            <div className="hover:bg-sky-100 rounded cursor-pointer p-1"
+            <div className="hover:bg-gray-400 rounded cursor-pointer p-1"
                 key={option.value} onClick={()=>handleOptionClick(option)}
             >
                 {option.label}
@@ -54,7 +53,7 @@ export default function Dropdown ({options, value, onChange}: DropdownProps){
     return (
         <div ref={divElem} className="w-48 relative">
             <Panel 
-                className="flex justify-between  items-center cursor-pointer"
+                className="flex justify-between items-center cursor-pointer"
                 onClick={handleClick}
             >
                 {value?.label || 'Select theme...'}

@@ -15,7 +15,7 @@ export default function Panel ({
     return (
         <div {...rest}
             className={clsx(
-                'border rounded-md p-3 shadow bg-gray-200 w-full',
+                'border rounded-md  shadow bg-gray-200 w-full',
                 className
         )}>
             {children}

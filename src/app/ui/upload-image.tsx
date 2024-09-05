@@ -17,6 +17,7 @@ export default function UploadImage ({ onImageClick }: ImageNameProps){
     const handleSubmit = async () => {
         let formData = new FormData();
         formData.append('file', image.raw);
+
         const result = await axios.post(`/api/upload`, formData , {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -28,6 +29,7 @@ export default function UploadImage ({ onImageClick }: ImageNameProps){
         })
         .catch(error=> console.log(error)) 
     };
+    
     const handlePhotoChange = (e: any) => {
         if (e.target.files.length) {
             setImage({
