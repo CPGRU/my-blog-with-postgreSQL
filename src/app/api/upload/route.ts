@@ -12,7 +12,6 @@ export const md5 = (contents: crypto.BinaryLike) => crypto.createHash('md5').upd
 
 export async function POST (
     req: Request, 
-    res:Response
 ){
     const formData = await req.formData();
     const file = formData.get('file') as File;

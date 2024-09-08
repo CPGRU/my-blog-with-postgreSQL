@@ -1,8 +1,11 @@
 import pool from '../../lib/db';
 
-export async function GET (res: Response){
+export async function GET (){
+    
     
     try{
+        
+
         const client = await pool.connect();
         const query = `
             SELECT id, title, post_date, post_image,post_theme 

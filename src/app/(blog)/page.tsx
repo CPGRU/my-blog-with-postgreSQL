@@ -8,26 +8,20 @@ import { PostData } from "../lib/definitions";
 
 
 export default function Home() {
-  const [ posts, setPosts ] = useState<PostData[]>([]);
+  const [ allPosts, setAllPosts ] = useState<PostData[]>([]);
 
  
   useEffect(()=>{
     async function fetchPosts(){
       const res = await axios.get('/api/getposts');
       const sortedPosts = res.data.sort((a: PostData, b: PostData)=>(a.post_date > b.post_date? -1: 1))
-      setPosts(sortedPosts)
+      setAllPosts(sortedPosts)
     }
     fetchPosts()
   }, [])
-    /*
-  const fetchPosts = async ()=>{
-    const res = await axios.get('/api/getposts');
-    const sortedPosts = res.data.sort((a: PostData, b: PostData)=>(a.post_date > b.post_date? -1: 1))
-      setPosts(sortedPosts)
-  }
-  fetchPosts()
-  */ 
-  const renderedPosts = posts.map((post)=>{
+
+
+  const renderedPosts = allPosts.map((post)=>{
     return (
       <div key={post.id} className="w-full px-4">
         <div className="mb-10 w-full">
@@ -37,7 +31,7 @@ export default function Home() {
               alt={`${post.post_theme} image`} 
               width={500} 
               height={500} 
-              className="w-96" 
+              className="w-auto" 
               
               sizes="(min-width: 8080px) 50vw,100vw"/>
           </div>
@@ -83,7 +77,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {renderedPosts}
         </div>
       </div>

@@ -26,6 +26,7 @@ export default function Form() {
         {label: 'Travel', value: 'travel'},
         {label: 'Food', value: 'food'},
         {label: 'Tech', value: 'tech'},
+        {label: 'Health', value: 'health'},
     ] 
     
     const handleSubmit = async(event:FormEvent) =>{
@@ -56,7 +57,7 @@ export default function Form() {
         <div>
             <form onSubmit={handleSubmit}  className="flex flex-col">
                 <div >
-                    <div className="flex flex-row">
+                    <div className="flex flex-row mb-[60px]">
                         <Dropdown options={options} value={selectedTheme} onChange={(option)=> setSelectedTheme(option)}/>
                         <input className="border ml-5" id="title" value={title} onChange={(event)=>setTitle(event.target.value)} placeholder="title..."required/>
                     </div>
