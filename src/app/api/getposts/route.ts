@@ -8,7 +8,7 @@ export async function GET (){
 
         const client = await pool.connect();
         const query = `
-            SELECT id, title, post_date, post_image,post_theme 
+            SELECT id, title, post_date, post_image, post_theme 
             FROM posts
         `;
 

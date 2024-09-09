@@ -13,7 +13,7 @@ export default function Home() {
  
   useEffect(()=>{
     async function fetchPosts(){
-      const res = await axios.get('/api/getposts');
+      const res = await axios.get(`/api/getposts`);
       const sortedPosts = res.data.sort((a: PostData, b: PostData)=>(a.post_date > b.post_date? -1: 1))
       setAllPosts(sortedPosts)
     }
@@ -31,7 +31,7 @@ export default function Home() {
               alt={`${post.post_theme} image`} 
               width={500} 
               height={500} 
-              className="w-auto" 
+              className="w-96 h-64" 
               
               sizes="(min-width: 8080px) 50vw,100vw"/>
           </div>
@@ -44,8 +44,6 @@ export default function Home() {
                 {post.post_theme}
               </span>
             </div>
-              
-            
             <h3>
               <Link href={`/${post.id}`} className="mb-4 inline-block text-xl font-semibold text-black hover:text-indigo-700">
                 {post.title}

@@ -9,17 +9,22 @@ export async function generateStaticParams() {
       
       {
       id: post.id?.toString(),
-      //id: post.id
+      //Required parameter(id)is string in generateStaticParams
     }))
   }
 
 
 export default async function postPage({ params }: {params: {id: string}}){
-    const { id } = params
+    const {id} = params;
     const result = await axios.get(`${process.env.BASE_URL}/api/getPostById`, { params: { id: params.id, } })
-    console.log(result.data)
+    const { title, post_date, post_content} = result.data;
     return (
-        <div>My post: {params.id}<div>Test: <p dangerouslySetInnerHTML={{ __html: result.data.post_content }}></p></div></div>
+        <div className="px-44 py-28">
+          <p className="text-sm text-slate-500">{post_date.split('T')[0]}</p>
+          <h1 className="font-bold text-3xl text-indigo-700  tracking-wide text-center mt-3 mb-8">{title}</h1>
+          
+          <div dangerouslySetInnerHTML={{ __html: post_content }} className="indent-8 "></div>
+        </div>
         
     )
 }

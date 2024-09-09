@@ -11,11 +11,12 @@ export async function GET (req: Request){
         const query = `
             SELECT id, title, post_date, post_image, post_content
             FROM posts 
-            WHERE id=${id}
+            WHERE id=$1
         `;
 
         const results = await client.query(
             query, 
+            [id]
         );
         client.release();
 
