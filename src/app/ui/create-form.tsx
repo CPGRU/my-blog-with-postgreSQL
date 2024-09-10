@@ -27,7 +27,7 @@ export default function Form() {
         {label: 'Food', value: 'food'},
         {label: 'Tech', value: 'tech'},
         {label: 'Health', value: 'health'},
-    ] 
+    ]; 
     
     const handleSubmit = async(event:FormEvent) =>{
         event.preventDefault();
@@ -50,7 +50,6 @@ export default function Form() {
             setContent('');
             setImageName('')
         }
-        
     };
   
     return (
@@ -77,26 +76,13 @@ export default function Form() {
                             }
                         />
                     </div>
-                    
-                
                     <QuillEditor className="bg-gray-300" theme="snow" modules={modules} formats={formats} value={content} onChange={setContent} placeholder="your content" />
-                    <UploadImage onImageClick={(filename)=>setImageName(filename)} />
-
-                        
+                    <UploadImage onImageClick={(filename)=>setImageName(filename)} />        
                 </div>
-              
                 <Button  className="mt-30">
                     <PlusCircleIcon className="w-5"/>
                     <span className="ml-2" >Send</span>
-                </Button>
-
-                
-
-                
-                
-                
-                
-                                
+                </Button>                   
             </form>            
         </div> 
     )

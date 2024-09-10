@@ -1,61 +1,11 @@
-'use client';
-
 import axios from "axios";
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { PostData } from "../lib/definitions";
+import PostCards from "../ui/postCards";
 
 
-export default function Home() {
-  const [ allPosts, setAllPosts ] = useState<PostData[]>([]);
-
- 
-  useEffect(()=>{
-    async function fetchPosts(){
-      const res = await axios.get(`/api/getposts`);
-      const sortedPosts = res.data.sort((a: PostData, b: PostData)=>(a.post_date > b.post_date? -1: 1))
-      setAllPosts(sortedPosts)
-    }
-    fetchPosts()
-  }, [])
-
-
-  const renderedPosts = allPosts.map((post)=>{
-    return (
-      <div key={post.id} className="w-full px-4">
-        <div className="mb-10 w-full">
-          <div className="mb-8 overflow-hidden rounded">
-            <Image 
-              src={`/assets/${post.post_image}`} 
-              alt={`${post.post_theme} image`} 
-              width={500} 
-              height={500} 
-              className="w-96 h-64" 
-              
-              sizes="(min-width: 8080px) 50vw,100vw"/>
-          </div>
-          <div>
-            <div className="flex justify-between">
-              <span className="mb-5 inline-block rounded bg-indigo-400 px-4 py-1 text-center text-xs font-semibold text-white leading-loose">
-                {post.post_date.split('T')[0]}
-              </span>
-              <span className="mb-5 inline-block rounded bg-red-400 px-4 py-1 text-center text-xs font-semibold text-white leading-loose">
-                {post.post_theme}
-              </span>
-            </div>
-            <h3>
-              <Link href={`/${post.id}`} className="mb-4 inline-block text-xl font-semibold text-black hover:text-indigo-700">
-                {post.title}
-              </Link>
-            </h3>
-            
-          </div>
-        </div>
-      </div>
-    )
-  })
-  
+export default async function Home() {
+  const posts = await axios.get(`${process.env.BASE_URL}/api/getposts`).then((res)=>res.data);
+  const sortedPosts = posts.sort((a: PostData, b: PostData)=>(a.post_date > b.post_date? -1: 1))
 
   return (
     <main>
@@ -75,8 +25,8 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {renderedPosts}
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+          <PostCards sortedPosts={sortedPosts}/>
         </div>
       </div>
     </main>
