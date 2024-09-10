@@ -1,5 +1,7 @@
 import axios from "axios";
 import { PostData } from "../lib/definitions";
+import Link from "next/link";
+import Image from "next/image";
 
 
 export async function generateStaticParams() {
@@ -18,12 +20,20 @@ export default async function postPage({ params }: {params: {id: string}}){
     const result = await axios.get(`${process.env.BASE_URL}/api/getPostById`, { params: { id: params.id, } })
     const { title, post_date, post_content} = result.data;
     return (
-        <div className="px-44 py-28">
+      <div>
+        <div className="grid justify-center">
+          <Link href="/" className="ml-10">
+            <Image src='/logo.png' alt='logo' width={200} height={200} className="inline"/>
+          </Link>
+        </div>
+        <div className="px-44 ">
           <p className="text-sm text-slate-500">{post_date.split('T')[0]}</p>
           <h1 className="font-bold text-3xl tracking-wide text-center mt-3 mb-8">{title}</h1>
           
           <div dangerouslySetInnerHTML={{ __html: post_content }} className="indent-8 "></div>
         </div>
+      </div>
+      
         
     )
 }

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { PostData } from "../lib/definitions";
 import PostCards from "../ui/postCards";
+import NavBar from "../navbar";
 
 
 export default async function Home() {
@@ -9,7 +10,9 @@ export default async function Home() {
 
   return (
     <main>
+      
       <div className="container mx-auto">
+        <div><NavBar /></div>
         <div className="flex flex-wrap">
           <div className="w-full px-4">
             <div className="mx-auto mb-[60px] max-w-[510px] text-center">
