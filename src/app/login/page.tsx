@@ -1,32 +1,47 @@
+import {getServerSession} from "next-auth/next"
+import { redirect } from "next/navigation";
+import LoginForm from "./form";
+import { authConfig } from "../api/auth/[...nextauth]/route";
+
+
+export default async function LoginPage() {
+    const session = await getServerSession(authConfig);
+
+     if(session){
+         redirect('/');
+     }
+
+    return (
+        <section className="bg-black h-screen flex items-center justify-center">
+            <div className="w-[600px]">
+                <LoginForm />
+            </div>
+        </section>
+    )
+}
+
+/*
 import { signIn } from "@/auth";
-import Image from "next/image";
-import { useActionState } from "react";
-import { authenticate } from "../lib/action";
-// import { signIn } from "next-auth/react";
-
-
-
-
-export default function LoginPage(){
-     /*
+import Image from "next/image";3000
+     
     const [ errorMessage, formAction, isPending ] = useActionState(
         authenticate,
         undefined
     )
         
-    */
+    
     const formAction = async (formData: FormData) =>{
         'use server'
         //const email = formData.get('email');
         //const password = formData.get('password')
         try{
             await signIn('credentials', formData
-                /*{
+                {
                 email,
                 password,
                 redirect: false
             }
-                */ )
+                 )
                 
         }catch(error){
             console.error('Login Failed: ', error)
@@ -62,3 +77,4 @@ export default function LoginPage(){
         </main>
     )
 }
+*/
