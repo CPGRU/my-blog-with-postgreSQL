@@ -1,7 +1,7 @@
 import axios from "axios";
-import { PostData } from "../lib/definitions";
-import PostCards from "../ui/postCards";
-import NavBar from "../navbar";
+import { PostData } from "./lib/definitions";
+import PostCards from "./ui/postCards";
+import NavBar from "./navbar";
 
 
 export default async function Home() {
