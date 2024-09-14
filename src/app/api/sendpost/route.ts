@@ -1,8 +1,20 @@
+import { getServerSession } from "next-auth/next";
+import { authConfig } from "../auth/[...nextauth]/route";
 import pool from '../../lib/db';
 
 export async function POST (
     req: Request ,
-){
+){  
+    
+    const session = await getServerSession( authConfig);
+
+    if (!session) {
+        return new Response('You must be logged in', {
+            status: 401
+        })
+    };
+    
+
     if(!req.body){
         return new Response('request body is empty', {
             status: 400

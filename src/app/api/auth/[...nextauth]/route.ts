@@ -1,11 +1,9 @@
 import NextAuth from "next-auth";
 import type { NextAuthOptions } from "next-auth"
-
 import Credentials from "next-auth/providers/credentials";
 import pool from '../../../lib/db';
-const bcrypt = require('bcrypt');
 
-import { string } from "zod";
+const bcrypt = require('bcrypt');
 
 async function getUser(email: string){
     try {
@@ -61,7 +59,7 @@ export const authConfig = {
                 }
             },
         }),
-    ], // rest of your config
+    ], 
   } satisfies NextAuthOptions;
 
 const handler = NextAuth(authConfig);

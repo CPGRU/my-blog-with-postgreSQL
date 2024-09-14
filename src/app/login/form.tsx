@@ -17,7 +17,6 @@ import {
     FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Toast } from '@/components/ui/toast';
 import { toast } from '@/hooks/use-toast';
 
 const FormScheme = z.object({
@@ -50,7 +49,7 @@ export default function LoginForm(){
             const response: any = await signIn("credentials", {
                 email,
                 password,
-                // redirect: false,
+                redirect: false,
             });
             console.log({ response });
             if(!response?.error){
