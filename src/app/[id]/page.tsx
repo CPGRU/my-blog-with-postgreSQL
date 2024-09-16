@@ -5,7 +5,7 @@ import Image from "next/image";
 
 
 export async function generateStaticParams() {
-    const posts = await axios.get(`${process.env.BASE_URL}/api/getposts`).then((res)=>res.data)
+    const posts = await axios.get(`${process.env.BASE_URL}/api/blogpost`).then((res)=>res.data)
     
     return posts.map((post: PostData) => (
       {
@@ -17,7 +17,7 @@ export async function generateStaticParams() {
 
 export default async function postPage({ params }: {params: {id: string}}){
     const {id} = params;
-    const result = await axios.get(`${process.env.BASE_URL}/api/getPostById`, { params: { id: params.id, } })
+    const result = await axios.get(`${process.env.BASE_URL}/api/blogpost/${params.id}`);
     const { title, post_date, post_content} = result.data;
     return (
       <div>

@@ -5,7 +5,7 @@ import NavBar from "./navbar";
 
 
 export default async function Home() {
-  const posts = await axios.get(`${process.env.BASE_URL}/api/getposts`).then((res)=>res.data);
+  const posts = await axios.get(`${process.env.BASE_URL}/api/blogpost`).then((res)=>res.data);
   const sortedPosts = posts.sort((a: PostData, b: PostData)=>(a.post_date > b.post_date? -1: 1))
 
   return (

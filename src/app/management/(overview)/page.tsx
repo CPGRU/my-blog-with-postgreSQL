@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 import { PostData } from "@/app/lib/definitions";
+import OverviewTable from "@/app/ui/table";
 
 export default async function overviewPage (){
     const session = await getServerSession(authConfig);
@@ -12,13 +13,15 @@ export default async function overviewPage (){
         redirect('/')
     };
 
-    const posts = await axios.get(`${process.env.BASE_URL}/api/getposts`).then((res)=>res.data);
-    const sortedPosts = posts.sort((a: PostData, b: PostData)=>(a.post_date > b.post_date? -1: 1))
+    const posts = await axios.get(`${process.env.BASE_URL}/api/blogpost/`).then((res)=>res.data);
+    const sortedPosts = posts.sort((a: PostData, b: PostData)=>(a.post_date > b.post_date? -1: 1));
+
+    
 
     return (
         <div>
             <Link href='/management/create'>Create post</Link>
-            <div>overview...</div>
+            <OverviewTable sortedPosts={sortedPosts} />
         </div>
     )
 }

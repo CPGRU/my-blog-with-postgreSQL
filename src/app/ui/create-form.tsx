@@ -40,7 +40,7 @@ export default function Form() {
                 post_theme: selectedTheme?.value
             } as PostData;
 
-            await axios.post('/api/sendpost', data)
+            await axios.post('/api/blogpost', data)
                 .then(res=>{console.log(res)})
                 .catch(err=>console.log(err))
             
