@@ -16,7 +16,6 @@ export async function generateStaticParams() {
 
 
 export default async function postPage({ params }: {params: {id: string}}){
-    const {id} = params;
     const result = await axios.get(`${process.env.BASE_URL}/api/blogpost/${params.id}`);
     const { title, post_date, post_content} = result.data;
     return (
