@@ -33,7 +33,32 @@ export async function GET (_: Request,{ params }: {params: {id: string}}){
         status: 200
     })
 }
-export async function PUT(){
+export async function PUT( req: Request,  { params }: {params: {id: string}} ){
+
+    try {
+        const jasonData = await req.json();
+        console.log(jasonData.title)
+        /*
+
+        const client = await pool.connect();
+        
+        const query = `
+            UPDATE posts
+            SET 
+            WHERE id=$1
+        `;
+
+        await client.query(
+            query, 
+            [params.id]
+        );
+        client.release();
+        */
+        return new Response("", {status: 200});
+    }catch (err){
+        console.log('Failed to fetch user: ', err)
+        return new Response('Failed to fetch user', {status: 500});
+    }
     
 }
 
@@ -41,7 +66,7 @@ export async function DELETE(req: Request,  { params }: {params: {id: string}}){
 
     try {
         const client = await pool.connect();
-        console.log(client);
+        
         const query = `
             DELETE 
             FROM posts

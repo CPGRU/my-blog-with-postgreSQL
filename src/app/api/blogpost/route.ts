@@ -1,15 +1,10 @@
 import pool from '../../lib/db';
-
 import { getServerSession } from "next-auth/next";
 import { authConfig } from "../auth/[...nextauth]/route";
 
 
 export async function GET (){
-    
-    
     try{
-        
-
         const client = await pool.connect();
         const query = `
             SELECT id, title, post_date, post_image, post_theme 
@@ -23,18 +18,16 @@ export async function GET (){
         return Response.json(results.rows);
     }catch(error){
         console.log(error)
-        
-    }
+    };
     
     return new Response("Success", {
         status: 200
-    })
+    });
 }
 
 export async function POST (
     req: Request ,
 ){  
-    
     const session = await getServerSession( authConfig);
 
     if (!session) {
@@ -43,7 +36,6 @@ export async function POST (
         })
     };
     
-
     if(!req.body){
         return new Response('request body is empty', {
             status: 400

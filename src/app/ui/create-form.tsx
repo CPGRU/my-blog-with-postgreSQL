@@ -14,13 +14,13 @@ import Dropdown from "./dropdown";
 
 
 
-export default function Form() {
+export default function CreateForm() {
     const [ selectedTheme, setSelectedTheme ] = useState<{label: string, value: string} | null>(null);
     const [ title, setTitle ] = useState('');
     const [ content, setContent ] = useState('');
     const [ imageName, setImageName ] = useState('');
     const [ selectedDate, setSelectedDate ] = useState<Date | null>(new Date());
-    const date = selectedDate?.toISOString().split('T')[0];
+    const date = selectedDate?.toISOString()//.split('T')[0];
     
     const options = [
         {label: 'Travel', value: 'travel'},
@@ -58,7 +58,7 @@ export default function Form() {
                 <div >
                     <div className="flex flex-row mb-[60px]">
                         <Dropdown options={options} value={selectedTheme} onChange={(option)=> setSelectedTheme(option)}/>
-                        <input className="border ml-5" id="title" value={title} onChange={(event)=>setTitle(event.target.value)} placeholder="title..."required/>
+                        <input className="border ml-5 w-full" id="title" value={title} onChange={(event)=>setTitle(event.target.value)} placeholder="title..."required/>
                     </div>
                 </div>
                 <div className="flex flex-col">

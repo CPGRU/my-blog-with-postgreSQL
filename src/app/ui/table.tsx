@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { PostData } from "../lib/definitions";
 import axios from "axios";
-import pool from '../../app/lib/db';
+import Link from "next/link";
 
 interface PostDataProps{
     sortedPosts: PostData[];
@@ -22,9 +22,13 @@ export default function OverviewTable({sortedPosts }: PostDataProps){
                 <td>{post.post_date.split('T')[0]}</td>
                 <td>{post.post_theme}</td>
                 <td>{post.title}</td>
-                <td>
+                <td className="flex justify-between">
                     <Button onClick={()=>handleDelete(post.id)}>Delete</Button>
-                    <Button>Edit</Button>
+                    <Button>
+                        <Link href={`/management/edit/${post.id}`}>
+                            Edit
+                        </Link>
+                    </Button>
                 </td>
             </tr>                
         )
