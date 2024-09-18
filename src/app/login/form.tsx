@@ -100,7 +100,7 @@ export default function LoginForm(){
                     )}
                 />
                 <Button type="submit" disabled={form.formState.isSubmitting}>
-                    {form.formState.isSubmitting ? "Opening...." : "Open Sesame!"}
+                    Login
                 </Button>
             </form>
         </Form>

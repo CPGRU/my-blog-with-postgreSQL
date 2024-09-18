@@ -34,19 +34,20 @@ export default function EditForm({post}: PostProps) {
     const [ content, setContent ] = useState(post.post_content);
     const [ imageName, setImageName ] = useState('');
     const [ selectedDate, setSelectedDate ] = useState<Date | null>(new Date(post.post_date));
-    const date = selectedDate?.toISOString()//.split('T')[0];
+    const date = selectedDate?.toISOString();
     
    
     
     const handleSubmit = async(event:FormEvent) =>{
         event.preventDefault();
-        if( title && content && imageName && selectedTheme ){
+       
+        if( title && content ){
             const data = {
                 post_date: date,
                 title,
                 post_content: content,
-                post_image: imageName,
-                post_theme: selectedTheme?.value
+                post_image: post.post_image,
+                post_theme: post.post_theme
             } as PostData;
 
             await axios.put(`/api/blogpost/${post.id}/`, data)

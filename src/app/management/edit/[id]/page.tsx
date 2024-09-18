@@ -15,7 +15,6 @@ export default async function EditPage({params}: {params: {id: string}}) {
   };
 
   const result = await axios.get(`${process.env.BASE_URL}/api/blogpost/${params.id}`);
-  const { title, post_date, post_content} = result.data;
 
   const backToOverview = (
     <div>
@@ -26,7 +25,7 @@ export default async function EditPage({params}: {params: {id: string}}) {
           <span className="ml-2">Back</span>
         </Link>
     </div>
-)
+  );
 
   return (
     <div className="container mx-auto">

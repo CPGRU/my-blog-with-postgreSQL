@@ -1,7 +1,11 @@
 import pool from '../../../lib/db';
+import { getServerSession } from "next-auth/next";
+import { authConfig } from "../../auth/[...nextauth]/route";
 
-export async function GET (_: Request,{ params }: {params: {id: string}}){
-
+export async function GET (
+    _: Request,
+    { params }: {params: {id: string}}
+){
     try{
         
         const client = await pool.connect();
@@ -32,37 +36,59 @@ export async function GET (_: Request,{ params }: {params: {id: string}}){
     return new Response("Success", {
         status: 200
     })
-}
-export async function PUT( req: Request,  { params }: {params: {id: string}} ){
+};
+
+export async function PUT( 
+    req: Request,  
+    { params }: {params: {id: string}} 
+){
+    const session = await getServerSession( authConfig);
+
+    if (!session) {
+        return new Response('You must be logged in', {
+            status: 401
+        })
+    };
 
     try {
-        const jasonData = await req.json();
-        console.log(jasonData.title)
-        /*
-
+        const jsonData = await req.json();
+        const updatedTitle = jsonData.title;
+        const updatedDate = jsonData.post_date;
+        const updatedContent = jsonData.post_content
+        
         const client = await pool.connect();
         
         const query = `
             UPDATE posts
-            SET 
-            WHERE id=$1
+            SET title=$1, post_date=$2, post_content=$3
+            WHERE id=$4
         `;
 
         await client.query(
             query, 
-            [params.id]
+            [updatedTitle, updatedDate, updatedContent, params.id]
         );
         client.release();
-        */
+        
         return new Response("", {status: 200});
     }catch (err){
-        console.log('Failed to fetch user: ', err)
-        return new Response('Failed to fetch user', {status: 500});
+        console.log('Failed to update post: ', err)
+        return new Response('Failed to update post', {status: 500});
     }
     
-}
+};
 
-export async function DELETE(req: Request,  { params }: {params: {id: string}}){
+export async function DELETE(
+    _: Request,  
+    { params }: {params: {id: string}}
+){
+    const session = await getServerSession( authConfig);
+
+    if (!session) {
+        return new Response('You must be logged in', {
+            status: 401
+        })
+    };
 
     try {
         const client = await pool.connect();
@@ -83,4 +109,4 @@ export async function DELETE(req: Request,  { params }: {params: {id: string}}){
         console.log('Failed to fetch user: ', err)
         return new Response('Failed to fetch user', {status: 500});
     }
-}
+};

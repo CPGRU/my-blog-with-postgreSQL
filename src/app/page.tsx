@@ -1,13 +1,11 @@
-import axios from "axios";
-import { PostData } from "./lib/definitions";
+import { Suspense } from "react";
 import PostCards from "./ui/postCards";
 import NavBar from "./navbar";
+import Loading from "./loading";
+import React from "react";
 
 
-export default async function Home() {
-  const posts = await axios.get(`${process.env.BASE_URL}/api/blogpost`).then((res)=>res.data);
-  const sortedPosts = posts.sort((a: PostData, b: PostData)=>(a.post_date > b.post_date? -1: 1))
-
+export default function Home() {
   return (
     <main>
       
@@ -28,10 +26,12 @@ export default async function Home() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
-          <PostCards sortedPosts={sortedPosts}/>
+        <div>
+          <Suspense fallback={<Loading />}>
+            <PostCards />
+          </Suspense>  
         </div>
       </div>
     </main>
   )
-}
+};

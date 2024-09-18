@@ -20,7 +20,7 @@ export default function CreateForm() {
     const [ content, setContent ] = useState('');
     const [ imageName, setImageName ] = useState('');
     const [ selectedDate, setSelectedDate ] = useState<Date | null>(new Date());
-    const date = selectedDate?.toISOString()//.split('T')[0];
+    const date = selectedDate?.toISOString();
     
     const options = [
         {label: 'Travel', value: 'travel'},
