@@ -5,6 +5,7 @@ import Loading from "./loading";
 import React from "react";
 
 
+
 export default function Home() {
   return (
     <main>
@@ -18,7 +19,7 @@ export default function Home() {
                 Our Blogs
               </span>
               <h2 className="mb-4 text-3xl font-bold text-dark">
-                New Articles
+                About Us
               </h2>
               <p className="text-base text-slate-700">
               Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 

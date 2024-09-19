@@ -4,7 +4,7 @@ import { authConfig } from "../auth/[...nextauth]/route";
 
 
 export async function GET (){
-    await new Promise(f => setTimeout(f, 10000));
+    //await new Promise(f => setTimeout(f, 10000));
     try{
         const client = await pool.connect();
         const query = `

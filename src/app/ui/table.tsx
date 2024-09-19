@@ -20,7 +20,7 @@ export default function OverviewTable({sortedPosts }: PostDataProps){
         return (
             <tr key={post.id}>
                 <td>{post.post_date.split('T')[0]}</td>
-                <td>{post.post_theme}</td>
+                <td className="text-center">{post.post_theme}</td>
                 <td>{post.title}</td>
                 <td className="flex justify-between">
                     <Button onClick={()=>handleDelete(post.id)}>Delete</Button>
@@ -40,8 +40,8 @@ export default function OverviewTable({sortedPosts }: PostDataProps){
                     <table className="w-full table-auto">
                         <thead className="text-center bg-indigo-500 text-white font-bold">
                             <tr>
-                                <th>Date</th>
-                                <th>Theme</th>
+                                <th className="w-32">Date</th>
+                                <th className="w-32">Theme</th>
                                 <th>Title</th>
                                 <th>Statement</th>
                             </tr>

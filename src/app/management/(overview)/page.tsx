@@ -1,13 +1,15 @@
 
-
+import { Suspense } from "react";
 import { getServerSession } from "next-auth/next";
 import { authConfig } from "../../api/auth/[...nextauth]/route";
-import { redirect, usePathname } from "next/navigation";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 import { PostData } from "@/app/lib/definitions";
 import OverviewTable from "@/app/ui/table";
 import Nav from "../nav";
+import { TableSkeleton } from "@/app/ui/skeletons";
+import Loading from "../loading";
 
 
 export default async function overviewPage (){
@@ -33,8 +35,11 @@ export default async function overviewPage (){
 
     return (
         <div>
-            <Nav>{createButton}</Nav>    
-            <OverviewTable sortedPosts={sortedPosts} />
+            <Nav>{createButton}</Nav> 
+            <Suspense fallback={<Loading />}>
+                <OverviewTable sortedPosts={sortedPosts} />
+            </Suspense>   
+            
         </div>
     )
 }
