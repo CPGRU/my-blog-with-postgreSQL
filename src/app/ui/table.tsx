@@ -5,15 +5,20 @@ import { PostData } from "../lib/definitions";
 import axios from "axios";
 import Link from "next/link";
 
+
 interface PostDataProps{
     sortedPosts: PostData[];
-    
-}
+};
+
+
 
 export default function OverviewTable({sortedPosts }: PostDataProps){
 
     const handleDelete = async (id?: number) =>{
-        await axios.delete(`/api/blogpost/${id}/`)
+        //const { post_image} = await axios.get(`/api/blogpost/${id}`).then((res)=>res.data);
+        
+
+        await axios.delete(`/api/blogpost/${id}/`);
     };
 
     const renderedPosts = sortedPosts.map((post: PostData)=>{
@@ -53,4 +58,4 @@ export default function OverviewTable({sortedPosts }: PostDataProps){
                 </div>
             </div>
     )
-}
+};

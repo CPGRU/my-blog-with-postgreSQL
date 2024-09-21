@@ -8,7 +8,6 @@ import axios from "axios";
 import { PostData } from "@/app/lib/definitions";
 import OverviewTable from "@/app/ui/table";
 import Nav from "../nav";
-import { TableSkeleton } from "@/app/ui/skeletons";
 import Loading from "../loading";
 
 

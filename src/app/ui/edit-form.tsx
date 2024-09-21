@@ -3,6 +3,7 @@
 import "react-quill/dist/quill.snow.css";
 import 'react-datepicker/dist/react-datepicker.min.css';
 import { FormEvent, useState } from "react";
+import { useRouter } from 'next/navigation';
 import { DocumentCheckIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 import DatePicker from "react-datepicker";
@@ -12,11 +13,10 @@ import { Button } from "./button";
 import UploadImage from "./upload-image";
 import Dropdown from "./dropdown";
 
+
 interface PostProps{
     post: PostData
 };
-
-
 
 export default function EditForm({post}: PostProps) {
      const options = [
@@ -26,8 +26,10 @@ export default function EditForm({post}: PostProps) {
         {label: 'Health', value: 'health'},
     ]; 
 
+    const router = useRouter();
+
     const option = options.filter((option)=> option.value == post.post_theme) ;
-    const theme = option[0]
+    const theme = option[0];
     
     const [ selectedTheme, setSelectedTheme ] = useState<{label: string, value: string} | null>(theme);
     const [ title, setTitle ] = useState(post.title);
@@ -35,8 +37,6 @@ export default function EditForm({post}: PostProps) {
     const [ imageName, setImageName ] = useState('');
     const [ selectedDate, setSelectedDate ] = useState<Date | null>(new Date(post.post_date));
     const date = selectedDate?.toISOString();
-    
-   
     
     const handleSubmit = async(event:FormEvent) =>{
         event.preventDefault();
@@ -51,15 +51,13 @@ export default function EditForm({post}: PostProps) {
             } as PostData;
 
             await axios.put(`/api/blogpost/${post.id}/`, data)
-                .then(res=>{console.log(res)})
-                .catch(err=>console.log(err))
-            
-            setSelectedTheme(null);
-            setSelectedDate(new Date());
-            setTitle('');
-            setContent('');
-            setImageName('')
-        }
+                .then(res=>{
+                    console.log(res); 
+                    router.push('/management');
+                    router.refresh();
+                })
+                .catch(err=>console.log(err))        
+        };
     };
   
     return (

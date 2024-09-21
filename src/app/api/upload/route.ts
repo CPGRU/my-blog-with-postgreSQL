@@ -42,7 +42,6 @@ export async function POST (
       buffer
     );
     
-    // Return a JSON response with a success message and a 201 status code
     return Response.json({ Message: "Success", file: filename, status: 201 });
   } catch (error) {
     // If an error occurs during file writing, log the error and return a JSON response with a failure message and a 500 status code

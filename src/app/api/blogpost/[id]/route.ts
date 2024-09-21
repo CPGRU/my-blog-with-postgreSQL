@@ -1,6 +1,10 @@
 import pool from '../../../lib/db';
 import { getServerSession } from "next-auth/next";
 import { authConfig } from "../../auth/[...nextauth]/route";
+//import fs from "fs";
+import path from "path";
+
+
 
 export async function GET (
     _: Request,
@@ -78,6 +82,18 @@ export async function PUT(
     
 };
 
+const { unlink } = require('node:fs/promises');
+
+async function deleteImageFromFs(post_image: string){
+    const imagesPath = path.join(process.cwd(), 'public/assets', post_image);
+    try{
+        await unlink(imagesPath);
+        console.log(`successfully deleted ${imagesPath}`)
+    }catch(error){
+        console.error('there was an error:', error)
+    }
+};
+
 export async function DELETE(
     _: Request,  
     { params }: {params: {id: string}}
@@ -92,8 +108,21 @@ export async function DELETE(
 
     try {
         const client = await pool.connect();
+
+        let query = `
+            select post_image 
+            FROM posts
+            WHERE id=$1
+        `;
+
+        const image_result = await client.query(
+            query, 
+            [params.id]
+        );
+
+        deleteImageFromFs(image_result.rows[0].post_image)
         
-        const query = `
+        query = `
             DELETE 
             FROM posts
             WHERE id=$1
@@ -103,8 +132,11 @@ export async function DELETE(
             query, 
             [params.id]
         );
+        
         client.release();
+
         return new Response("", {status: 200});
+
     }catch (err){
         console.log('Failed to fetch user: ', err)
         return new Response('Failed to fetch user', {status: 500});

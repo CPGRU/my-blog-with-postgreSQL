@@ -3,6 +3,7 @@
 import "react-quill/dist/quill.snow.css";
 import 'react-datepicker/dist/react-datepicker.min.css';
 import { FormEvent, useState } from "react";
+import { useRouter } from 'next/navigation';
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 import DatePicker from "react-datepicker";
@@ -14,6 +15,7 @@ import Dropdown from "./dropdown";
 
 
 
+
 export default function CreateForm() {
     const [ selectedTheme, setSelectedTheme ] = useState<{label: string, value: string} | null>(null);
     const [ title, setTitle ] = useState('');
@@ -21,6 +23,8 @@ export default function CreateForm() {
     const [ imageName, setImageName ] = useState('');
     const [ selectedDate, setSelectedDate ] = useState<Date | null>(new Date());
     const date = selectedDate?.toISOString();
+
+    const router = useRouter();
     
     const options = [
         {label: 'Travel', value: 'travel'},
@@ -41,14 +45,19 @@ export default function CreateForm() {
             } as PostData;
 
             await axios.post('/api/blogpost', data)
-                .then(res=>{console.log(res)})
+                .then(res=>{
+                    console.log(res);
+                    router.push('/management');
+                    router.refresh();
+                })
                 .catch(err=>console.log(err))
-            
+            /*
             setSelectedTheme(null);
             setSelectedDate(new Date());
             setTitle('');
             setContent('');
             setImageName('')
+            */
         }
     };
   
