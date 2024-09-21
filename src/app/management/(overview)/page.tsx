@@ -33,12 +33,11 @@ export default async function overviewPage (){
     )
 
     return (
-        <div>
+        <div className="container mx-auto">
             <Nav>{createButton}</Nav> 
             <Suspense fallback={<Loading />}>
                 <OverviewTable sortedPosts={sortedPosts} />
             </Suspense>   
-            
         </div>
     )
 }

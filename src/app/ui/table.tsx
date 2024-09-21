@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { PostData } from "../lib/definitions";
 import axios from "axios";
@@ -10,15 +11,17 @@ interface PostDataProps{
     sortedPosts: PostData[];
 };
 
-
-
 export default function OverviewTable({sortedPosts }: PostDataProps){
+    const router = useRouter()
 
     const handleDelete = async (id?: number) =>{
         //const { post_image} = await axios.get(`/api/blogpost/${id}`).then((res)=>res.data);
         
 
-        await axios.delete(`/api/blogpost/${id}/`);
+        await axios.delete(`/api/blogpost/${id}/`).then((res)=>{
+            console.log(res);
+            router.refresh();
+        });
     };
 
     const renderedPosts = sortedPosts.map((post: PostData)=>{

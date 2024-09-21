@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { DocumentCheckIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 import DatePicker from "react-datepicker";
-import { PostData, Option } from "../lib/definitions";
+import { PostData } from "../lib/definitions";
 import { QuillEditor, modules, formats } from "./text-editor";
 import { Button } from "./button";
 import UploadImage from "./upload-image";

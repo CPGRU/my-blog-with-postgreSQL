@@ -51,14 +51,7 @@ export default function CreateForm() {
                     router.refresh();
                 })
                 .catch(err=>console.log(err))
-            /*
-            setSelectedTheme(null);
-            setSelectedDate(new Date());
-            setTitle('');
-            setContent('');
-            setImageName('')
-            */
-        }
+        };
     };
   
     return (
