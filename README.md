@@ -3,6 +3,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Blogs Website
 
 ![home_image](public/Home.png)
+![login_image](public/login.png)
+![create_image](public/create.png)
+![management_image](public/management.png)
 
 ## Getting Started
 
