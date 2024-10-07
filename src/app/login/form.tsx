@@ -69,8 +69,8 @@ export default function LoginForm(){
     };
 
     return (
-        <Form {...form} >
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} >
                 <FormField
                     control={form.control}
                     name="email"
@@ -98,7 +98,7 @@ export default function LoginForm(){
                         </FormItem>
                     )}
                 />
-                <Button type="submit" disabled={form.formState.isSubmitting}>
+                <Button type="submit" disabled={form.formState.isSubmitting}className='mt-4'>
                     Login
                 </Button>
             </form>
